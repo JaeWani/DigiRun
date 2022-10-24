@@ -1,15 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+[System.Serializable]
+public class SaveData
+{
+    public int highest_score;
+}
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] List<GameObject> Monster_5 = new List<GameObject>();
+
+    private static GameManager _instance { get; set; } = null;
+    public static GameManager Get() 
+    {
+        if (_instance == null)
+            Debug.LogError($"{nameof(GameManager)}'s instance is null");
+
+        return _instance;
+    }
+
+     private void Awake() 
+    {
+        if (_instance == null)
+            _instance = this;
+    }
+    private void Start()
+    {
+        Debug.Log(P_LineIndex);
+        //StartCoroutine(SpawnMonster());
+        StartCoroutine(ScorePlus());
+        Save();
+    }
+    [ContextMenu("To Json Data")]
+    void Save() 
+    {
+        SaveData saveData = new SaveData();
+
+        if (Score > saveData.highest_score)
+            saveData.highest_score = Score;
+
+        string json = JsonUtility.ToJson(saveData);
+
+        string flieName = "DB";
+        string path = Path.Combine(Application.dataPath, flieName + ".Json");
+
+        File.WriteAllText(path, json);
+    }
+    
+    [SerializeField] public int P_HP = 3;
+
+
+
     //스코어 텍스트 만들다가 껐다.
 
     [SerializeField]
-    TextMeshProUGUI Score_Text;
+    Text Score_Text;
+    public int Score = 0;
+
+    [SerializeField] public GameObject[] HP_UI = new GameObject[3];
 
     // 라인  ( 줄 )
     [SerializeField] 
@@ -17,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     //몬스터 프리펩
     [SerializeField]
-    public GameObject[] Monster = new GameObject[4];
+    public GameObject[] Monster = new GameObject[5];
 
     // 플레이어 
     [SerializeField]
@@ -31,11 +83,6 @@ public class GameManager : MonoBehaviour
      [SerializeField] int TwoLine;
 
      [SerializeField] float MonsterSpawnTime = 3;
-    private void Start()
-    {
-        Debug.Log(P_LineIndex);
-        StartCoroutine(SpawnMonster());
-    }
     //플레이어 라인 변경
     void ChangeLine()
     {
@@ -55,8 +102,8 @@ public class GameManager : MonoBehaviour
     IEnumerator SpawnMonster()
     {
         M_LineIndex = Random.Range(0, 4);
-        MonsterIndex = Random.Range(0, 4);
-        MonsterIndex2 = Random.Range(0,4);
+        MonsterIndex = Random.Range(0, 5);
+        MonsterIndex2 = Random.Range(0,5);
         yield return new WaitForSecondsRealtime(MonsterSpawnTime);
         int rand = Random.Range(0, 2);
         TwoLine = Random.Range(0, 4);
@@ -77,13 +124,56 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(SpawnMonster());
     }
-    private void Awake()
-    { 
-        
+    IEnumerator ScorePlus()
+    {
+        yield return new WaitForSecondsRealtime(0.05f);
+        Score += 3;
+        Score_Text.text = Score + " M";
+        StartCoroutine(ScorePlus());
     }
     private void Update()
     {
         ChangeLine();
+        SetHP();
+    }
+   public void Player_Hit() 
+    {
+        P_HP--;    
+    }
+    public void SetHP() 
+    {
+        if (P_HP <= 0)
+        {
+            HP_UI[0].SetActive(false);
+            HP_UI[1].SetActive(false);
+            HP_UI[2].SetActive(false);
+            GameOver();
+        }
+        else if (P_HP == 1)
+        {
+            HP_UI[0].SetActive(false);
+            HP_UI[1].SetActive(false);
+        }
+        else if (P_HP == 2)
+        {
+            HP_UI[0].SetActive(false);
+        }
+        else if (P_HP <= 3) 
+        {
+            P_HP = 3;
+            HP_UI[0].SetActive(true);
+            HP_UI[1].SetActive(true);
+            HP_UI[2].SetActive(true);
+        }
+    }
+    public void GameOver() 
+    { 
+    
     }
 
+    // ================================== 몬스터 패턴  ======================================
+    void Monster_5_P() 
+    {
+    }
+    // ================================== 몬스터 패턴  ======================================
 }
