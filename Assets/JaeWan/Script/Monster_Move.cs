@@ -6,21 +6,17 @@ public class Monster_Move : MonoBehaviour
 {
     [SerializeField]
     float speed = 0.001f ;
-
-    [SerializeField]
-    float DelTime = 5;
-
-    private void Start()
-    {
-        StartCoroutine(DestroyObj());
-    }
     void Update()
     {
         transform.position += new Vector3(speed * -1, 0, 0);
     }
-    IEnumerator DestroyObj() 
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        yield return new WaitForSecondsRealtime(DelTime);
-        Destroy(gameObject);
+        if (collision.gameObject.tag == "Wall")
+        {
+            Debug.Log("¾Æ¾Æ¾Ó");
+            Destroy(gameObject);
+        }
     }
 }
+
