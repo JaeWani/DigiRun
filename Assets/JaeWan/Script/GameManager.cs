@@ -11,6 +11,7 @@ public class SaveData
 }
 public class GameManager : MonoBehaviour
 {
+    public bool IsGameOver;
 
     [SerializeField] List<GameObject> Monster_5 = new List<GameObject>();
 
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     {
         if (_instance == null)
             _instance = this;
+
+        IsGameOver = false;
     }
     private void Start()
     {
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(SpawnMonster());
         StartCoroutine(ScorePlus());
         Save();
+        GameOver_Panel.SetActive(false) ;
     }
     [ContextMenu("To Json Data")]
     void Save() 
@@ -54,7 +58,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int P_HP = 3;
 
 
-
+    [SerializeField] GameObject GameOver_Panel;
+    [SerializeField] Text GameOver_Score;
+    [SerializeField] Text GameOver_Highest_Score;
     //스코어 텍스트 만들다가 껐다.
 
     [SerializeField]
@@ -86,16 +92,18 @@ public class GameManager : MonoBehaviour
     //플레이어 라인 변경
     void ChangeLine()
     {
-        if (P_LineIndex < 0)
-            P_LineIndex = 0;
-        else if (P_LineIndex > 3)
-            P_LineIndex = 3;
+        if (IsGameOver == false) {
+            if (P_LineIndex < 0)
+                P_LineIndex = 0;
+            else if (P_LineIndex > 3)
+                P_LineIndex = 3;
 
-        P.transform.position = new Vector3(-6, Line[P_LineIndex].position.y, 0);
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            P_LineIndex--;
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            P_LineIndex++;
+            P.transform.position = new Vector3(-6, Line[P_LineIndex].position.y, 0);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                P_LineIndex--;
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+                P_LineIndex++;
+        }
     }
 
     //몬스터 스폰 코루틴
@@ -167,8 +175,11 @@ public class GameManager : MonoBehaviour
         }
     }
     public void GameOver() 
-    { 
-    
+    {
+        GameOver_Panel.SetActive(true);
+        StopAllCoroutines();
+        GameOver_Score.text = Score + "M";
+        IsGameOver = true;
     }
 
     // ================================== 몬스터 패턴  ======================================

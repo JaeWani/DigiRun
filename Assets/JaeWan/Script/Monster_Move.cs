@@ -15,11 +15,12 @@ public class Monster_Move : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall")
         {
-   
+            Destroy(gameObject);
         }
         else if (collision.gameObject.tag == "Player") 
         {
             GameManager.Get().Player_Hit();
+            Destroy(gameObject);
         }
 
     }
