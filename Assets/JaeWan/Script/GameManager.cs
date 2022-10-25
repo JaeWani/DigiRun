@@ -30,9 +30,12 @@ public class GameManager : MonoBehaviour
             _instance = this;
 
         IsGameOver = false;
+        P_Collider = P.GetComponent<BoxCollider2D>();
+        P_Anim = P.GetComponent<Animator>();
     }
     private void Start()
     {
+        
         Debug.Log(P_LineIndex);
         //StartCoroutine(SpawnMonster());
         StartCoroutine(ScorePlus());
@@ -78,8 +81,9 @@ public class GameManager : MonoBehaviour
     public GameObject[] Monster = new GameObject[5];
 
     // 플레이어 
-    [SerializeField]
-    GameObject P;
+    [SerializeField] GameObject P;
+    [SerializeField] Animator P_Anim;
+    [SerializeField] BoxCollider2D P_Collider;
 
     //플레이어 라인 인덱스 번호
      [SerializeField] int P_LineIndex = 1;
@@ -146,7 +150,18 @@ public class GameManager : MonoBehaviour
     }
    public void Player_Hit() 
     {
-        P_HP--;    
+        P_HP--;
+        StartCoroutine(P_invincibility());
+    }
+    public int P_invincibility_time;
+    IEnumerator P_invincibility() 
+    {
+        Debug.Log("무적");
+        P_Collider.isTrigger = true;
+        P_Anim.SetBool("IsHit", true);
+        yield return new WaitForSecondsRealtime(P_invincibility_time);
+        P_Collider.isTrigger = false;
+        P_Anim.SetBool("IsHit", false);
     }
     public void SetHP() 
     {
