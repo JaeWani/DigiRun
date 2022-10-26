@@ -12,9 +12,6 @@ public class SaveData
 public class GameManager : MonoBehaviour
 {
     public bool IsGameOver;
-
-    [SerializeField] List<GameObject> Monster_5 = new List<GameObject>();
-
     private static GameManager _instance { get; set; } = null;
     public static GameManager Get() 
     {
@@ -41,6 +38,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ScorePlus());
         Save();
         GameOver_Panel.SetActive(false) ;
+        Random_Pattern();
     }
     [ContextMenu("To Json Data")]
     void Save() 
@@ -57,10 +55,49 @@ public class GameManager : MonoBehaviour
 
         File.WriteAllText(path, json);
     }
-    
+    //============패턴 구현=================
+    [Header ("패턴")]
+    [SerializeField] List<Sprite> Pattern_Sprite = new List<Sprite>();// 0. 일반 유령 / 1. 물귀신  / 2. 휴지 귀신
+    [SerializeField] public List<GameObject> Pattern = new List<GameObject>(); // 0. 일반 유령 / 2. 물귀신 / 2. 휴지 귀신 1 / 
+    [SerializeField] Image Pattern_Image;
+    [SerializeField] int _usePattern;
+
+    [Range(0f, 100f)]
+    [SerializeField] public float Pattern_CoolTime;
+
+    [SerializeField] public int Pattern_Index;
+
+     public void Random_Pattern() 
+    {
+        Debug.Log("패턴 실행!");
+        Pattern_Index = Random.Range(0, 4);
+            int i= Pattern_Index;
+        while (i == Pattern_Index)
+        {
+            Pattern_Index = Random.Range(0, 4);
+            Debug.Log("패턴 번호 뽑는 중");
+        }
+
+        Pattern_Image.sprite = Pattern_Sprite[Pattern_Index];
+        Debug.Log("패턴 실행!1");
+        Pattern[Pattern_Index].SetActive(true);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Coll")
+        {
+            Debug.Log("히힛");
+            Pattern[Pattern_Index].transform.position = new Vector3(0, 0, 0);
+            Pattern[Pattern_Index].SetActive(false);
+            Random_Pattern();
+            Debug.Log("히힛2");
+        }
+    }
+    //============패턴 구현=================
+
     [SerializeField] public int P_HP = 3;
 
-
+    [Header ("게임 오버 패널")]
     [SerializeField] GameObject GameOver_Panel;
     [SerializeField] Text GameOver_Score;
     [SerializeField] Text GameOver_Highest_Score;
@@ -81,17 +118,20 @@ public class GameManager : MonoBehaviour
     public GameObject[] Monster = new GameObject[5];
 
     // 플레이어 
+    [Header ("플레이어")]
     [SerializeField] GameObject P;
     [SerializeField] Animator P_Anim;
     [SerializeField] BoxCollider2D P_Collider;
 
     //플레이어 라인 인덱스 번호
+     [Header (" 라인 인덱스 번호")]
      [SerializeField] int P_LineIndex = 1;
      [SerializeField] int M_LineIndex;
      [SerializeField] int MonsterIndex;
      [SerializeField] int MonsterIndex2;
      [SerializeField] int TwoLine;
 
+     [Header ("몬스터 스폰 시간 ( 이제 사용 안함 )")]
      [SerializeField] float MonsterSpawnTime = 3;
     //플레이어 라인 변경
     void ChangeLine()
@@ -147,6 +187,7 @@ public class GameManager : MonoBehaviour
     {
         ChangeLine();
         SetHP();
+        P.transform.localEulerAngles = new Vector3(0,0,0);
     }
    public void Player_Hit() 
     {

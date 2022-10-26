@@ -9,6 +9,7 @@ TagManager:
   - Monster 3
   - Monster 4
   - Wall
+  - Coll
   layers:
   - Default
   - TransparentFX
