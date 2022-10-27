@@ -895,7 +895,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.05524254, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -983,6 +983,7 @@ MonoBehaviour:
   TwoLine: 0
   MonsterSpawnTime: 3
   P_invincibility_time: 1
+  Candy_Hit_time: 0
 --- !u!4 &445949159
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,7 +2035,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.05524254, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2373,6 +2374,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8569294719767978209, guid: c583fe7433b44414d8515bf5375a1bcd, type: 3}
+      propertyPath: speed
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 3087174952985414609, guid: c583fe7433b44414d8515bf5375a1bcd, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2518,6 +2523,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3790619318297136668, guid: 43fe24d8704418c49ae53558fedd1b85, type: 3}
+      propertyPath: speed
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 4024334915143376530, guid: 43fe24d8704418c49ae53558fedd1b85, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -2584,6 +2593,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -901537092390547902, guid: 07eaa9db8962e244d840d3f20bb85b1b, type: 3}
+      propertyPath: speed
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 5349190818132303044, guid: 07eaa9db8962e244d840d3f20bb85b1b, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -2738,7 +2751,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.067860246, y: -0.00073963404}
+  m_Offset: {x: 0.055018306, y: -0.00073963404}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2749,7 +2762,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38865113, y: 0.065834165}
+  m_Size: {x: 0.3336146, y: 0.065834165}
   m_EdgeRadius: 0
 --- !u!50 &1852329801
 Rigidbody2D:
@@ -2871,7 +2884,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.05524254, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3118,7 +3131,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.05524254, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3328,6 +3341,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.9990001
       objectReference: {fileID: 0}
+    - target: {fileID: 4382176693972209510, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
+      propertyPath: speed
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 5035949387044438108, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 47.002
@@ -3335,6 +3352,14 @@ PrefabInstance:
     - target: {fileID: 5035949387044438108, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.5009998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089110545296474312, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 47.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089110545296474312, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.43
       objectReference: {fileID: 0}
     - target: {fileID: 6438360918160584900, guid: 159b0beb874a9a54a8e43f875b85a3d6, type: 3}
       propertyPath: m_LocalPosition.x

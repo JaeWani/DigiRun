@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] BoxCollider2D P_Collider;
 
     //플레이어 라인 인덱스 번호
+
      [Header (" 라인 인덱스 번호")]
      [SerializeField] int P_LineIndex = 1;
      [SerializeField] int M_LineIndex;
@@ -137,16 +138,17 @@ public class GameManager : MonoBehaviour
     void ChangeLine()
     {
         if (IsGameOver == false) {
-            if (P_LineIndex < 0)
-                P_LineIndex = 0;
-            else if (P_LineIndex > 3)
-                P_LineIndex = 3;
+           
+                if (P_LineIndex < 0)
+                    P_LineIndex = 0;
+                else if (P_LineIndex > 3)
+                    P_LineIndex = 3;
 
-            P.transform.position = new Vector3(-6, Line[P_LineIndex].position.y, 0);
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-                P_LineIndex--;
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-                P_LineIndex++;
+                P.transform.position = new Vector3(-6, Line[P_LineIndex].position.y, 0);
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                    P_LineIndex--;
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                    P_LineIndex++;
         }
     }
 
@@ -185,7 +187,15 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        ChangeLine();
+        if (IsCandy == false)
+        {
+            ChangeLine();
+        }
+        else
+        {
+
+        }
+    
         SetHP();
         P.transform.localEulerAngles = new Vector3(0,0,0);
     }
@@ -237,10 +247,17 @@ public class GameManager : MonoBehaviour
         GameOver_Score.text = Score + "M";
         IsGameOver = true;
     }
-
-    // ================================== 몬스터 패턴  ======================================
-    void Monster_5_P() 
+    [Header("Candy")]
+    [SerializeField] float Candy_Hit_time = 0.7f;
+    bool IsCandy;
+    IEnumerator CandyGhost_Hit() 
     {
+        IsCandy = true;
+        yield return new WaitForSecondsRealtime(Candy_Hit_time);
+        IsCandy = false;
     }
-    // ================================== 몬스터 패턴  ======================================
+   public void StartCandy() 
+    {
+        StartCoroutine(CandyGhost_Hit());
+    }
 }
