@@ -189,11 +189,12 @@ public class GameManager : MonoBehaviour
     {
         if (IsCandy == false)
         {
+            Debug.Log("작동중");
             ChangeLine();
         }
         else
         {
-
+            Debug.Log("안 작동중");
         }
     
         SetHP();
@@ -204,7 +205,8 @@ public class GameManager : MonoBehaviour
         P_HP--;
         StartCoroutine(P_invincibility());
     }
-    public int P_invincibility_time;
+    [Header ("플레이어 무적 시간")]  [Range (0,5f)]
+    public float P_invincibility_time;
     IEnumerator P_invincibility() 
     {
         Debug.Log("무적");
@@ -252,12 +254,15 @@ public class GameManager : MonoBehaviour
     bool IsCandy;
     IEnumerator CandyGhost_Hit() 
     {
+        Debug.Log("IsCandy 활성화");
         IsCandy = true;
         yield return new WaitForSecondsRealtime(Candy_Hit_time);
+        Debug.Log("IsCandy 비 활성화");
         IsCandy = false;
     }
    public void StartCandy() 
     {
+        Debug.Log("불렸다.");
         StartCoroutine(CandyGhost_Hit());
     }
 }
