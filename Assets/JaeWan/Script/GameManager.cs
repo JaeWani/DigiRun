@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
+
 [System.Serializable]
 public class SaveData
 {
@@ -34,11 +36,13 @@ public class GameManager : MonoBehaviour
     {
         
         Debug.Log(P_LineIndex);
+        Hit_Image[0].SetActive(false);
         //StartCoroutine(SpawnMonster());
         StartCoroutine(ScorePlus());
         Save();
         GameOver_Panel.SetActive(false) ;
         Random_Pattern();
+
     }
     [ContextMenu("To Json Data")]
     void Save() 
@@ -62,6 +66,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image Pattern_Image;
     [SerializeField] int _usePattern;
 
+
+
     [Range(0f, 100f)]
     [SerializeField] public float Pattern_CoolTime;
 
@@ -70,11 +76,11 @@ public class GameManager : MonoBehaviour
      public void Random_Pattern() 
     {
         Debug.Log("패턴 실행!");
-        Pattern_Index = Random.Range(0, 4);
+        Pattern_Index = Random.Range(0, 5);
             int i= Pattern_Index;
         while (i == Pattern_Index)
         {
-            Pattern_Index = Random.Range(0, 4);
+            Pattern_Index = Random.Range(0, 5);
             Debug.Log("패턴 번호 뽑는 중");
         }
 
@@ -265,4 +271,5 @@ public class GameManager : MonoBehaviour
         Debug.Log("불렸다.");
         StartCoroutine(CandyGhost_Hit());
     }
+    [SerializeField] List<GameObject> Hit_Image = new List<GameObject>();
 }
