@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class SmartPhone_Ghost : MonoBehaviour
 {
+
+    SoundManager sm;
+
     [Header("휴대폰 귀신 피격 씬")]
     [SerializeField] GameObject Monster_10_Hit_Image;
     [SerializeField] SpriteRenderer Monster_10_Hit_Sprite;
     [SerializeField] Animator Monster_10_Anim;
+
+    private void Awake()
+    {
+        sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+    }
     void Start()
     {
         Monster_10_Hit_Image.SetActive(false);
@@ -30,7 +38,7 @@ public class SmartPhone_Ghost : MonoBehaviour
 
         Monster_10_Hit_Image.SetActive(true);
         Monster_10_Anim.SetBool("IsFade", true);
-        // 이 부분에 사운드 넣기
+        sm.GhostShoutingSoundPlay();
         StartCoroutine(Monster_10_Hit_FadeOut());
         Monster_10_Anim.SetBool("IsFade", false);
     }

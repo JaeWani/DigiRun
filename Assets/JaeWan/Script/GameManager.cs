@@ -13,6 +13,8 @@ public class SaveData
 }
 public class GameManager : MonoBehaviour
 {
+    SoundManager sm;
+
     public bool IsGameOver;
     private static GameManager _instance { get; set; } = null;
     public static GameManager Get() 
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
 
      private void Awake() 
     {
+        sm = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+
         if (_instance == null)
             _instance = this;
 
